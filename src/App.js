@@ -1,73 +1,79 @@
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-// } from 'react-router-dom';
-// import Home from './routes/Home';
-// import Detail from './routes/Detail';
-import axios from 'axios';
+import {
+  // BrowserRouter as Router,
+  HashRouter,
+  Switch,
+  Route,
+} from 'react-router-dom';
+import Home from './routes/Home';
+import Detail from './routes/Detail';
 import React from 'react';
-import Movie from './Movie';
 import "./App.css";
+import About from './routes/About';
 
-class App extends React.Component {
-  state = {
-    isLoading: true,
-    movies: []
-  };
+// class App extends React.Component {
+//   state = {
+//     isLoading: true,
+//     movies: []
+//   };
 
-  getMovies = async () => {  // 비동기
-    const { data: { data: { movies } } } = await axios.get("https://yts.mx/api/v2/list_movies.json?sort_by=rating");
-    this.setState({ movies, isLoading: false });
-  };
+//   getMovies = async () => {  // 비동기
+//     const { data: { data: { movies } } } = await axios.get("https://yts.mx/api/v2/list_movies.json?sort_by=rating");
+//     this.setState({ movies, isLoading: false });
+//   };
 
-  componentDidMount() { // render 전
-    // 1. data fetch (axios)
-    this.getMovies();
-    // 2. movie map
+//   componentDidMount() { // render 전
+//     // 1. data fetch (axios)
+//     this.getMovies();
+//     // 2. movie map
 
-    setTimeout(() => {
-      this.setState({ isLoading: false });
-    }, 6000);
-  }
+//     setTimeout(() => {
+//       this.setState({ isLoading: false });
+//     }, 6000);
+//   }
   
-  render() {
-    const { isLoading, movies } = this.state;
-    return <section className="container">{isLoading ? <div className="loader"><span className="loader__text">Loading...</span></div> : (
-      <div className="movies">
-        {movies.map(movie => {
-          return (
-            <Movie
-              key={movie.id}
-              id={movie.id}
-              year={movie.year}
-              title={movie.title}
-              summary={movie.summary}
-              poster={movie.medium_cover_image}
-              genres={movie.genres}
-            />
-          );
-        })}
-      </div>
-      )}
-    </section>
-  }
-}
+//   render() {
+//     const { isLoading, movies } = this.state;
+//     return <section className="container">{isLoading ? <div className="loader"><span className="loader__text">Loading...</span></div> : (
+//       <div className="movies">
+//         {movies.map(movie => {
+//           return (
+//             <Movie
+//               key={movie.id}
+//               id={movie.id}
+//               year={movie.year}
+//               title={movie.title}
+//               summary={movie.summary}
+//               poster={movie.medium_cover_image}
+//               genres={movie.genres}
+//             />
+//           );
+//         })}
+//       </div>
+//       )}
+//     </section>
+//   }
+// }
 
-// function App() {
+function App() {
 
-//     return (
-//       <Router>
-//         <Switch>
-//           <Route path="/movie/:id">
-//             <Detail />
-//           </Route>
-//           <Route path="/">
-//             <Home />
-//           </Route>
-//         </Switch>
-//       </Router>
-//     );
+    return (
+      <HashRouter>
+        <Switch>
+          <Route path="/movie/:id">
+            <Detail />
+          </Route>
+          <Route path="/home/introduction">
+            <h1>Introduction</h1>
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </HashRouter>
+    );
 
   // 1. TODO List
 
@@ -166,6 +172,6 @@ class App extends React.Component {
   //   </div>
   // );
 
-// }
+}
 
 export default App;
